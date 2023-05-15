@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author PC
  */
 @RestController
-@CrossOrigin(origins= "http://localhost:4200")
+@CrossOrigin(origins= "https://frontend-2b443.web.app")
 public class usuarioController {
     @Autowired IUsuarioService iusuarioservice;
     
