@@ -24,28 +24,33 @@ public class ImpUsuarioService{
     @Autowired 
     IUsuarioRepo iusuariorepo;
 
-    public List<Persona>list(){
-        return iusuariorepo.findAll();
-    }
-    public Optional<Persona> getOne(int id){
-        return iusuariorepo.findById(id);
-    }
-    public Optional<Persona> getByNombre(String nombre){
-        return iusuariorepo.findByNombre(nombre);
-    }
-    public void save(Persona persona){
-        iusuariorepo.save(persona);
-    }
-    public void delete(int id){
-    iusuariorepo.deleteById(id);
-    }
-    public boolean existsById(int id){
-        return iusuariorepo.existsById(id);
-    }
-    public boolean existsByNombre(String nombre){
-        return iusuariorepo.existsByNombre(nombre);
-    }   
-    
+    public List<Persona> list(){
+         return iusuariorepo.findAll();
+     }
+     
+     public Optional<Persona> getOne(int id){
+         return iusuariorepo.findById(id);
+     }
+     
+     public Optional<Persona> getByNombre(String nombre){
+         return iusuariorepo.findByNombre(nombre);
+     }
+     
+     public void save(Persona persona){
+         iusuariorepo.save(persona);
+     }
+     
+     public void delete(int id){
+         iusuariorepo.deleteById(id);
+     }
+     
+     public boolean existsById(int id){
+         return iusuariorepo.existsById(id);
+     }
+     
+     public boolean existsByNombre(String nombre){
+         return iusuariorepo.existsByNombre(nombre);
+     }
 }
 
 

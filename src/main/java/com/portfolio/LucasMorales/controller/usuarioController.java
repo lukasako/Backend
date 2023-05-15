@@ -35,36 +35,44 @@ public class usuarioController {
     ImpUsuarioService sPersona;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Persona>> list() {
+    public ResponseEntity<List<Persona>> list(){
         List<Persona> list = sPersona.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
-
+    
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Persona> getById(@PathVariable("id") int id) {
-        if (!sPersona.existsById(id)) {
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+    public ResponseEntity<Persona> getById(@PathVariable("id")int id){
+        if(!sPersona.existsById(id)){
+            return new ResponseEntity(new Mensaje("No existe el ID"), HttpStatus.BAD_REQUEST);
         }
-        Persona educacion = sPersona.getOne(id).get();
-        return new ResponseEntity(educacion, HttpStatus.OK);
+        
+        Persona persona = sPersona.getOne(id).get();
+        return new ResponseEntity(persona, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody DtoUsuario dtousuario){
-        if(!sPersona.existsById(id))
-            return new ResponseEntity(new Mensaje("El id no existe"), HttpStatus.BAD_REQUEST);
-        if(sPersona.existsByNombre(dtousuario.getNombre()) && sPersona
-                .getByNombre(dtousuario.getNombre()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(dtousuario.getNombre()))
-            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DtoUsuario dtopersona){
+        if(!sPersona.existsById(id)){
+            return new ResponseEntity(new Mensaje("No existe el ID"), HttpStatus.NOT_FOUND);
+        }
+        if(sPersona.existsByNombre(dtopersona.getNombre()) && sPersona.getByNombre(dtopersona.getNombre()).get().getId() != id){
+            return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+        }
+        if(StringUtils.isBlank(dtopersona.getNombre())){
+            return new ResponseEntity(new Mensaje("El campo no puede estar vacio"), HttpStatus.BAD_REQUEST);
+        }
         
-        Persona educacion = sPersona.getOne(id).get();
-        educacion.setNombre(dtousuario.getNombre());
-        educacion.setDescripcion(dtousuario.getDescripcion());
+        Persona persona = sPersona.getOne(id).get();
         
-        sPersona.save(educacion);
-        return new ResponseEntity(new Mensaje("Se actualizo con exito"), HttpStatus.OK);
+        persona.setNombre(dtopersona.getNombre());
+        persona.setApellido(dtopersona.getApellido());
+        persona.setDescripcion(dtopersona.getDescripcion());
+        persona.setImg(dtopersona.getImg());
+        
+        sPersona.save(persona);
+        
+        return new ResponseEntity(new Mensaje("Persona actualizada"), HttpStatus.OK);
     }
+   
     
 }
