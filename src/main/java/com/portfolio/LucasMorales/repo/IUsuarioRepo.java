@@ -7,6 +7,7 @@ package com.portfolio.LucasMorales.repo;
 
 
 import com.portfolio.LucasMorales.entity.Persona;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,10 +17,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IUsuarioRepo extends JpaRepository <Persona, Integer>{
-
-    public void deleteById(int id);
-
-    public Object findById(int id);
-
-    public Persona findAllById(int id);
+    public Optional<Persona> findByNombre(String nombre);
+    public boolean existsByNombre(String nombre);
 }

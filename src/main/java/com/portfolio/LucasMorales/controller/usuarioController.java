@@ -5,20 +5,21 @@
  */
 package com.portfolio.LucasMorales.controller;
 
-import com.portfolio.LucasMorales.Interface.IUsuarioService;
+import com.portfolio.LucasMorales.Dto.DtoUsuario;
+import com.portfolio.LucasMorales.Security.Controller.Mensaje;
 import com.portfolio.LucasMorales.entity.Persona;
+import com.portfolio.LucasMorales.service.ImpUsuarioService;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,53 +27,44 @@ import org.springframework.web.bind.annotation.RestController;
  * @author PC
  */
 @RestController
+@RequestMapping("/usuario")
 @CrossOrigin(origins= "https://frontend-2b443.web.app")
 public class usuarioController {
-    @Autowired IUsuarioService iusuarioservice;
     
-    @GetMapping("/usuario/traer")
-    public List<Persona> getUsuario(){
-        return iusuarioservice.getUsuario();
-    }
-    
+    @Autowired
+    ImpUsuarioService sPersona;
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @Transactional
-    @PostMapping("/usuario/crear")
-    public String createUsuario(@RequestBody Persona usuario) {
-        iusuarioservice.saveUsuario(usuario);
-        return "El usuario fue guardado con exito";
+    @GetMapping("/lista")
+    public ResponseEntity<List<Persona>> list() {
+        List<Persona> list = sPersona.list();
+        return new ResponseEntity(list, HttpStatus.OK);
     }
-    
-    /**
-     *
-     * @param id
-     * @return
-     */
-    @PreAuthorize("hasRole('ADMIN')")
-    @Transactional
-    @DeleteMapping("/usuario/borrar/{id}")
-    public String deleteUsuario(@PathVariable int id){
- 
-        iusuarioservice.deleteUsuario(id);
-        return "El usuario fue borrado con exito";
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Persona> getById(@PathVariable("id") int id) {
+        if (!sPersona.existsById(id)) {
+            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+        }
+        Persona educacion = sPersona.getOne(id).get();
+        return new ResponseEntity(educacion, HttpStatus.OK);
     }
-    
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/usuario/editar/{id}")
-    public Persona editUsuario(@PathVariable int id, @RequestParam("nombre") String NuevoNombre, @RequestParam("apellido") String NuevoApellido,@RequestParam("img") String NuevoImg){
-        Persona usuario =  iusuarioservice.findUsuario(id);
-        usuario.setNombre(NuevoNombre);
-        usuario.setApellido(NuevoApellido);
-        usuario.setImg(NuevoImg);
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody DtoUsuario dtousuario){
+        if(!sPersona.existsById(id))
+            return new ResponseEntity(new Mensaje("El id no existe"), HttpStatus.BAD_REQUEST);
+        if(sPersona.existsByNombre(dtousuario.getNombre()) && sPersona
+                .getByNombre(dtousuario.getNombre()).get().getId() != id)
+            return new ResponseEntity(new Mensaje("Ya existe"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(dtousuario.getNombre()))
+            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         
-        iusuarioservice.saveUsuario(usuario);
-        return usuario;
+        Persona educacion = sPersona.getOne(id).get();
+        educacion.setNombre(dtousuario.getNombre());
+        educacion.setDescripcion(dtousuario.getDescripcion());
+        
+        sPersona.save(educacion);
+        return new ResponseEntity(new Mensaje("Se actualizo con exito"), HttpStatus.OK);
     }
     
-    
-    @GetMapping("/usuario/traer/perfil")
-    public Persona findPersona(){
-        return iusuarioservice.findUsuario((int)2);
-    }
 }

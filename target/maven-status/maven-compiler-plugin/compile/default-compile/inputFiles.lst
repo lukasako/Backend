@@ -9,7 +9,6 @@ D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Repository\iUsuario
 D:\Backend\src\main\java\com\portfolio\LucasMorales\entity\Educacion.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Controller\Mensaje.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Entity\Usuario.java
-D:\Backend\src\main\java\com\portfolio\LucasMorales\Interface\IUsuarioService.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\controller\usuarioController.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\entity\Persona.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Service\RolService.java
@@ -25,6 +24,7 @@ D:\Backend\src\main\java\com\portfolio\LucasMorales\LucasMoralesApplication.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Dto\JwtDto.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Entity\Rol.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\controller\CExperiencia.java
+D:\Backend\src\main\java\com\portfolio\LucasMorales\Dto\DtoUsuario.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\Entity\UsuarioPrincipal.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\jwt\JwtTokenFilter.java
 D:\Backend\src\main\java\com\portfolio\LucasMorales\Security\jwt\JwtProvider.java

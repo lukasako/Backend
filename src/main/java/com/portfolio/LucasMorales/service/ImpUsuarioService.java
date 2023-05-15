@@ -5,10 +5,11 @@
  */
 package com.portfolio.LucasMorales.service;
 
-import com.portfolio.LucasMorales.Interface.IUsuarioService;
 import com.portfolio.LucasMorales.entity.Persona;
 import com.portfolio.LucasMorales.repo.IUsuarioRepo;
 import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,32 +18,33 @@ import org.springframework.stereotype.Service;
  * @author PC
  */
 @Service
-public class ImpUsuarioService implements IUsuarioService{
+@Transactional
+public class ImpUsuarioService{
 
-    @Autowired IUsuarioRepo iusuariorepo;
-    
-    @Override
-    public List<Persona> getUsuario() {
-        List<Persona> usuario= iusuariorepo.findAll();
-        return usuario;
+    @Autowired 
+    IUsuarioRepo iusuariorepo;
+
+    public List<Persona>list(){
+        return iusuariorepo.findAll();
     }
-
-    @Override
-    public void saveUsuario(Persona usuario) {
-        iusuariorepo.save(usuario);
+    public Optional<Persona> getOne(int id){
+        return iusuariorepo.findById(id);
     }
-
-    @Override
-    public void deleteUsuario(int id) {
-        iusuariorepo.deleteById(id);
+    public Optional<Persona> getByNombre(String nombre){
+        return iusuariorepo.findByNombre(nombre);
     }
-
-    
-    public Persona findUsuario(Integer id) {
-        Persona Usuario = iusuariorepo.findById(id).orElse(null);
-        return Usuario;
+    public void save(Persona persona){
+        iusuariorepo.save(persona);
     }
-
+    public void delete(int id){
+    iusuariorepo.deleteById(id);
+    }
+    public boolean existsById(int id){
+        return iusuariorepo.existsById(id);
+    }
+    public boolean existsByNombre(String nombre){
+        return iusuariorepo.existsByNombre(nombre);
+    }   
     
 }
 

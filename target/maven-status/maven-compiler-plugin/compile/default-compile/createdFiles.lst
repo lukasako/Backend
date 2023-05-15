@@ -1,9 +1,9 @@
 com\portfolio\LucasMorales\controller\CExperiencia.class
 com\portfolio\LucasMorales\Security\jwt\JwtTokenFilter.class
 com\portfolio\LucasMorales\Security\Repository\iUsuarioRepository.class
-com\portfolio\LucasMorales\Interface\IUsuarioService.class
 com\portfolio\LucasMorales\repo\IUsuarioRepo.class
 com\portfolio\LucasMorales\Dto\DtoExperiencia.class
+com\portfolio\LucasMorales\Dto\DtoUsuario.class
 com\portfolio\LucasMorales\Security\Service\RolService.class
 com\portfolio\LucasMorales\Security\MainSecurity.class
 com\portfolio\LucasMorales\repo\RExperiencia.class
