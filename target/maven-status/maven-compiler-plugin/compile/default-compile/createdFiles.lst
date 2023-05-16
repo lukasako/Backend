@@ -5,11 +5,13 @@ com\portfolio\LucasMorales\repo\IUsuarioRepo.class
 com\portfolio\LucasMorales\Dto\DtoExperiencia.class
 com\portfolio\LucasMorales\Dto\DtoUsuario.class
 com\portfolio\LucasMorales\Security\Service\RolService.class
+com\portfolio\LucasMorales\controller\CSkills.class
 com\portfolio\LucasMorales\Security\MainSecurity.class
 com\portfolio\LucasMorales\repo\RExperiencia.class
 com\portfolio\LucasMorales\controller\usuarioController.class
 com\portfolio\LucasMorales\Dto\DtoEducacion.class
 com\portfolio\LucasMorales\Security\Dto\JwtDto.class
+com\portfolio\LucasMorales\entity\Skills.class
 com\portfolio\LucasMorales\Security\Controller\Mensaje.class
 com\portfolio\LucasMorales\Security\Controller\AuthController.class
 com\portfolio\LucasMorales\controller\CEducacion.class
@@ -18,6 +20,7 @@ com\portfolio\LucasMorales\Security\Dto\LoginUsuario.class
 com\portfolio\LucasMorales\Security\Entity\Usuario.class
 com\portfolio\LucasMorales\Security\jwt\JwtEntryPoint.class
 com\portfolio\LucasMorales\LucasMoralesApplication.class
+com\portfolio\LucasMorales\Dto\DtoSkills.class
 com\portfolio\LucasMorales\Security\Service\UserDetailsImpl.class
 com\portfolio\LucasMorales\entity\Experiencia.class
 com\portfolio\LucasMorales\entity\Persona.class
@@ -26,7 +29,9 @@ com\portfolio\LucasMorales\entity\Educacion.class
 com\portfolio\LucasMorales\repo\REducacion.class
 com\portfolio\LucasMorales\Security\Entity\UsuarioPrincipal.class
 com\portfolio\LucasMorales\service\SEducacion.class
+com\portfolio\LucasMorales\repo\RSkills.class
 com\portfolio\LucasMorales\Security\Repository\iRolRepository.class
+com\portfolio\LucasMorales\service\SSkills.class
 com\portfolio\LucasMorales\Security\Enums\RolNombre.class
 com\portfolio\LucasMorales\Security\Dto\NuevoUsuario.class
 com\portfolio\LucasMorales\Security\jwt\JwtProvider.class
