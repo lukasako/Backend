@@ -28,51 +28,66 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/usuario")
-@CrossOrigin(origins= "https://frontend-2b443.web.app")
+@CrossOrigin(origins = "https://frontend-2b443.web.app")
 public class usuarioController {
-    
+
     @Autowired
     ImpUsuarioService sPersona;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Persona>> list(){
+    public ResponseEntity<List<Persona>> list() {
         List<Persona> list = sPersona.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
-    
+
     @GetMapping("/detail/{id}")
-    public ResponseEntity<Persona> getById(@PathVariable("id")int id){
-        if(!sPersona.existsById(id)){
+    public ResponseEntity<Persona> getById(@PathVariable("id") int id) {
+        if (!sPersona.existsById(id)) {
             return new ResponseEntity(new Mensaje("No existe el ID"), HttpStatus.BAD_REQUEST);
         }
-        
+
         Persona persona = sPersona.getOne(id).get();
         return new ResponseEntity(persona, HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DtoUsuario dtopersona){
-        if(!sPersona.existsById(id)){
-            return new ResponseEntity(new Mensaje("No existe el ID"), HttpStatus.NOT_FOUND);
+    /*@PostMapping("/create")
+    public ResponseEntity<?> create(@RequestBody DtoUsuario dtousuario) {
+        if (StringUtils.isBlank(dtousuario.getNombre())) {
+            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         }
-        if(sPersona.existsByNombre(dtopersona.getNombre()) && sPersona.getByNombre(dtopersona.getNombre()).get().getId() != id){
+        if (sPersona.existsByNombre(dtousuario.getNombre())) {
             return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         }
-        if(StringUtils.isBlank(dtopersona.getNombre())){
+
+        Persona persona = new Persona(
+                dtousuario.getNombre(), dtousuario.getDescripcion(), dtousuario.get
+        );
+        sPersona.save(persona);
+        return new ResponseEntity(new Mensaje("Usuario creada"), HttpStatus.OK);
+
+    }*/
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DtoUsuario dtopersona) {
+        if (!sPersona.existsById(id)) {
+            return new ResponseEntity(new Mensaje("No existe el ID"), HttpStatus.NOT_FOUND);
+        }
+        if (sPersona.existsByNombre(dtopersona.getNombre()) && sPersona.getByNombre(dtopersona.getNombre()).get().getId() != id) {
+            return new ResponseEntity(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+        }
+        if (StringUtils.isBlank(dtopersona.getNombre())) {
             return new ResponseEntity(new Mensaje("El campo no puede estar vacio"), HttpStatus.BAD_REQUEST);
         }
-        
+
         Persona persona = sPersona.getOne(id).get();
-        
+
         persona.setNombre(dtopersona.getNombre());
         persona.setApellido(dtopersona.getApellido());
         persona.setDescripcion(dtopersona.getDescripcion());
         persona.setImg(dtopersona.getImg());
-        
+
         sPersona.save(persona);
-        
+
         return new ResponseEntity(new Mensaje("Persona actualizada"), HttpStatus.OK);
     }
-   
-    
+
 }
